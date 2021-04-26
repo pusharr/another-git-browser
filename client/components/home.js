@@ -5,6 +5,7 @@ import Head from './head'
 import Ball from './Loading'
 import Main from './Main'
 import Navbar from './Navbar'
+import Readmi from './Readmi'
 import RepositoryList from './Repository-list'
 
 // import wave from '../assets/images/wave.jpg'
@@ -58,6 +59,7 @@ const Home = () => {
           path="/:username"
           component={() => <RepositoryList username={username} repos={repos} user={profile} />}
         />
+        <Route exact path="/:username/:reponame" component={() => <Readmi />} />
         {/* <PrivateRoute exact path="/hidden-route" component={() => <DummyView />} /> */}
         {/* <Route component={() => <NotFound />} /> */}
       </Switch>
