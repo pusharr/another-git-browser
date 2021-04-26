@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import { FaRegUser } from 'react-icons/fa'
 import { GoLocation } from 'react-icons/go'
 import { HiOutlineOfficeBuilding } from 'react-icons/hi'
@@ -10,6 +11,7 @@ import NotFound from './404'
 function RepositoryList(props) {
   const { repos, user } = props
   const [findName, setFindName] = useState('')
+  const { username } = useParams('')
 
   if (repos.length === 0)
     return (
@@ -74,7 +76,7 @@ function RepositoryList(props) {
             return (
               <div key={index}>
                 <p className="flex  my-2 hover:underline hover:text-purple-400 font-bold text-gray-700 text-2xl ">
-                  {repository.name}
+                  <Link to={`/${username}/${repository.name}`}>{repository.name}</Link>
                 </p>
               </div>
             )
