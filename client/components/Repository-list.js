@@ -29,19 +29,21 @@ function RepositoryList(props) {
           className="mt-4 mb-3 shadow-xl rounded-full h-48 w-48 items-start"
         />
         <div className="ml-10 flex-col text-gray-600 font-medium">
-          <div className="flex">
-            <FaRegUser className="mr-1 mt-1" />{' '}
-            {
-              <a
-                href={`https://github.com/${user.login}`}
-                className="hover:underline hover:text-blue-400"
-                rel="noreferrer"
-                target="_blank"
-              >
-                {user.name}
-              </a>
-            }
-          </div>
+          {user.name && (
+            <div className="flex">
+              <FaRegUser className="mr-1 mt-1" />{' '}
+              {
+                <a
+                  href={`https://github.com/${user.login}`}
+                  className="hover:underline hover:text-blue-400"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  {user.name}
+                </a>
+              }
+            </div>
+          )}
           <div className="flex ">
             {user.location && <GoLocation className="mr-1 mt-1" />} {user.location && user.location}
           </div>

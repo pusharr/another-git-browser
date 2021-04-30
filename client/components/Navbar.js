@@ -6,12 +6,12 @@ import { history } from '../redux'
 function Navbar() {
   const { username, reponame } = useParams('')
   return (
-    <div className="max-w-screen-xl m-auto flex items-center justify-between p-4 border-b-4">
+    <div className="max-w-screen-xl m-auto flex items-center justify-between p-4 ">
       <div className=" items-center justify-between p-4">
-        <button type="button" onClick={() => history.push('/')} className=" ">
+        <button type="button" onClick={() => history.push('/')} className=" focus:outline-none">
           <div>
             {username && (
-              <div className="flex text-red-500 hover:text-green-500 font-bold focus:outline-none">
+              <div className="flex text-red-500 hover:text-green-500 font-bold ">
                 <IoIosArrowBack className="mt-1" />
                 To Search
               </div>
@@ -22,7 +22,7 @@ function Navbar() {
         <div>
           {reponame && (
             <div
-              className="flex  hover:text-green-500 font-bold focus:outline-none cursor-pointer"
+              className="flex text-red-500 hover:text-green-500 font-bold focus:outline-none cursor-pointer"
               onClick={() => history.push(`/${username}`)}
               onKeyDown={() => history.push(`/${username}`)}
               aria-hidden="true"

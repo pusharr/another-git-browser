@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Switch, Route, useParams } from 'react-router-dom'
+import axios from 'axios'
 
 import Head from './head'
 import Ball from './Loading'
@@ -11,10 +12,39 @@ import RepositoryList from './Repository-list'
 // import wave from '../assets/images/wave.jpg'
 
 const Home = () => {
+  const { username, reponame } = useParams('')
   const [repos, setRepos] = useState([])
   const [profile, setProfile] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const { username } = useParams('')
+  const [readme, setReadme] = useState('')
+
+  // const urlRadme = `http://api.github.com/repos/${username}/${reponame}/readme`
+
+  // const fetchReadme = async (url) => {
+  //   setIsLoading(true)
+
+  //   try {
+  //     const response = await fetch(url)
+  //     const readmeMd = await response.json()
+  //     if (!response.ok) {
+  //       throw new Error('something wrong with fetching')
+  //     }
+  //     setReadme(readmeMd)
+  //     setIsLoading(false)
+  //   } catch (error) {
+  //     setIsLoading(false)
+  //     console.log(`fetch error : ${error.message}`)
+  //   }
+  // }
+  // useEffect(() => {
+  //   console.log('yo')
+  //   if (reponame && username) {
+  //     axios(urlRadme).then((res) => {
+  //       setReadme(res.data)
+  //     })
+  //     // fetchReadme(urlRadme)
+  //   }
+  // }, [reponame, username])
 
   const fetchRepos = async () => {
     setIsLoading(true)
@@ -38,7 +68,16 @@ const Home = () => {
     if (username) {
       fetchRepos()
     }
-  }, [username])
+    if (reponame && username) {
+      console.log('yo yo')
+      axios(`https://raw.githubusercontent.com/${username}/${reponame}/master/README.md`).then(
+        ({ data }) => {
+          console.log(JSON.stringify(data))
+          setReadme(data)
+        }
+      )
+    }
+  }, [username, reponame])
 
   if (isLoading) {
     return (
@@ -49,7 +88,7 @@ const Home = () => {
   }
 
   return (
-    <div className="bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 bg-cover">
+    <div className="bg-gradient-to-r from-yellow-400 via-blue-500 to-pink-500 min-h-screen ">
       <Navbar />
       <Head title="Hello" />
       <Switch>
@@ -59,7 +98,7 @@ const Home = () => {
           path="/:username"
           component={() => <RepositoryList username={username} repos={repos} user={profile} />}
         />
-        <Route exact path="/:username/:reponame" component={() => <Readmi />} />
+        <Route exact path="/:username/:reponame" component={() => <Readmi readme={readme} />} />
         {/* <PrivateRoute exact path="/hidden-route" component={() => <DummyView />} /> */}
         {/* <Route component={() => <NotFound />} /> */}
       </Switch>
